@@ -1,0 +1,36 @@
+voltage_sample_rate_hz: 10000
+current_sample_rate_hz: 3200
+crossmodal_rate_hz: 3200
+
+bispectrum_fft_size: 512
+bispectrum_frames_M: 100
+bootstrap_timeout_s: 30
+volterra_memory_taps_linear: 64
+volterra_memory_taps_quadratic: 16
+
+tikhonov_lambda_volterra: 1.0e-4
+wiener_lambda_floor: 0.01
+
+ekf_state_dim: 80
+ekf_Q_diagonal: 1.0e-6
+ekf_R_initial: 1.0e-4
+ekf_update_rate_hz: 100
+
+cusum_slack_factor: 1.0
+cusum_threshold_sigma: 5.0
+
+# IMPORTANT: measure R_load with a multimeter before running. Precision matters.
+r_load_ohms: 10.0
+crossmodal_alpha: 1.0
+crossmodal_beta: 1.0
+crossmodal_gamma: 0.5
+
+telemetry_rate_hz: 10
+uart_baud_esp32: 115200
+
+# Adjust these for your hardware
+teensy_usb_path: /dev/ttyACM0
+pi_uart_esp32: /dev/ttyS0
+
+confidence_green_threshold: 85
+confidence_amber_threshold: 70
