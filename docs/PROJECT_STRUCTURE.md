@@ -85,7 +85,11 @@ Spectre/
 │   ├── validate_synthetic.py   ← Run full pipeline on synthetic data, produce plots
 │   ├── profile_pi.py           ← Benchmark each pipeline stage on Pi
 │   ├── generate_test_signal.py ← Create synthetic sensor signals for testing
-│   └── plot_forensics.py       ← Plot the forensics report from a JSON file
+│   ├── plot_forensics.py       ← Plot the forensics report from a JSON file
+│   └── esp32_jitter_measure/   ← C-03-E validation tool (standalone PlatformIO project)
+│       ├── platformio.ini      ← ESP32-S3 build config (no production libs)
+│       └── src/
+│           └── main.cpp        ← ISR edge-capture → frequency + jitter statistics
 │
 └── data/
     └── logs/                   ← Runtime logs (gitignored)

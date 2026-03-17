@@ -5,13 +5,23 @@
 #include "acquisition.h"
 #include "ina219.h"
 
+namespace {
+
+constexpr uint8_t BUFFER_READY_GPIO_PIN = LED_BUILTIN;
+
+}  // namespace
+
 void setup() {
 	Serial.begin(115200);
+	pinMode(BUFFER_READY_GPIO_PIN, OUTPUT);
+	digitalWriteFast(BUFFER_READY_GPIO_PIN, LOW);
 
 	Wire.begin();
 	Wire.setClock(400000);
 
 	INA219_init();
+	acquisition_init();
+
 	if (INA219_is_ready()) {
 		Serial.println("INA219 OK");
 	} else {
@@ -20,18 +30,19 @@ void setup() {
 }
 
 void loop() {
-	static uint32_t last_print_ms = 0;
-	const uint32_t now_ms = millis();
+	if (INA219_is_ready()) {
+		g_latest_current_raw = INA219_read_current_raw();
+	}
 
-	if ((now_ms - last_print_ms) >= 500U) {
-		last_print_ms = now_ms;
+	bool buffer_ready = false;
+	noInterrupts();
+	if (g_buffer_ready) {
+		g_buffer_ready = false;
+		buffer_ready = true;
+	}
+	interrupts();
 
-		const int16_t voltage_raw = static_cast<int16_t>(analogRead(VOLTAGE_ADC_PIN));
-		const int16_t current_raw = INA219_read_current_raw();
-
-		Serial.print("V_RAW=");
-		Serial.print(voltage_raw);
-		Serial.print(" I_RAW=");
-		Serial.println(current_raw);
+	if (buffer_ready) {
+		digitalToggleFast(BUFFER_READY_GPIO_PIN);
 	}
 }

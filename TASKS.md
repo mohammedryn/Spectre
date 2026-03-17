@@ -59,7 +59,7 @@
   - `INA219_is_ready()`: check conversion ready bit in bus voltage register
 - [x] **C-02-C**: In `main.cpp setup()`: call `Wire.begin()` at 400 kHz, call `INA219_init()`, print "INA219 OK" or "INA219 FAIL" to Serial.
 - [x] **C-02-D**: In `main.cpp loop()`: print voltage raw + current raw every 500 ms.
-- [ ] **C-02-E**: Flash to Teensy. Open serial monitor. Verify both readings update at ~2 Hz.
+- [x] **C-02-E**: Flash to Teensy. Open serial monitor. Verify both readings update at ~2 Hz.
 
 **Validation (manual):** Serial prints two numeric values that change when you vary voltage/current.
 
